@@ -39,15 +39,26 @@ function get(req, res){
   var result = {errors: [], data: null} // db.get(id)
   var animalExists = db.get(id)
   if(!animalExists){
-    result.errors.push({id: 404, title:'page not found'})
-    res.status(404).render('error.ejs', Object.assign({}, result, helpers))
-    return console.log(err)
+    showError(404,'page not found', res)
   }
   result.data = db.get(id)
   res.render('detail.ejs', Object.assign({}, result, helpers))
 
 }
 
+
+function showError(id, title, res){
+  var errorObj = {
+    id: id,
+    title: title
+  }
+  var result = {errors: [errorObj], data: null}
+  res.status(id).render('error.ejs', Object.assign({}, result, helpers))
+}
+
 function notFound(err, req, res, next) {
-  console.log(err)
+  if (err.category === "invalid"){
+    return showError(400, 'Bad Request', res)
+  }
+  console.log("Uncaught Error: ",err)
 }

@@ -75,3 +75,5 @@ return console.log(err) ```
 result.errors.push({id: 404, title:'page not found'}), dit pusht de errors van result, geeft hieraan een 404 en laat de foutmelding zeggen 'page not found'.
 res.status(404).render('error.ejs', Object.assign({}, result, helpers)): bij de status 404, render je de errors van het bestand error.ejs.
 return console.log(err): hiermee log je de errors naar je console
+
+### **Handle invalid identifiers (such as curl localhost:1902/-) by sending a 400 Bad Request error back.**
