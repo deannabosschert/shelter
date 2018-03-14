@@ -18,6 +18,7 @@ module.exports = express()
   // .put('/:id', set)
   // .patch('/:id', change)
   // .delete('/:id', remove)
+  .delete('/:id', remove)
   .use(notFound)
   .listen(1902)
 
@@ -49,8 +50,6 @@ function get(req, res){
     json: () => res.json(result),
     html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
   })
-
-
 }
 
 function showError(id, title, res){
@@ -61,6 +60,26 @@ function showError(id, title, res){
   var result = {errors: [errorObj], data: null}
   res.status(id).render('error.ejs', Object.assign({}, result, helpers))
 }
+
+function remove(delete, req, res){
+  var id = req.params.id
+  data = data.filter(function (value) {
+    return value.id !== id
+  })
+  var result = {errors: [], data: null} // db.delete(id)
+  var animalDelete= db.delete(id)
+  if(!animalDelete){    //ik twijfel over die !
+    if (db.delete(id)) {
+      return showError(204,'No Content', res)
+    }
+    showError(404,'page not found', res)
+  }
+  result.data = db.delete(id)
+  res.json({status: 'ok'})
+
+}
+
+
 
 function notFound(err, req, res, next) {
   if (err.category === "invalid"){

@@ -117,6 +117,13 @@ In get stond al iets dat de HTML uitvoerde, dit knip je dus en plak je in bovens
 
 ### **Implement DELETE /:id by removing an animal (tip: db.remove()). Respond with a 404 Not Found for unfound animals and a 400 Bad Request for invalid identifiers. Respond with a 204 No Content if successful. Note: you can just return JSON, as HTML forms don’t support DELETE. Test it out with Curl (curl --verbose --request DELETE localhost:1902/something) to see if 204 and 404 are returned. Note: restarting the server restores the removed animals.**
 
+dingetje bovenaan bij express toegevoegd
+functie remove gemaakt, dingen van de voorbeeldserver in geflikkerd
+
+dingen van de get functie hierin gecopied en get vervangen door delete (of kut moet dat remove zijn? thuis ff naar kijken, busleef)
+
+### **Handle unfound animals that used to exist in GET /:id and DELETE /:id by sending a 410 Gone instead of 404 Not Found error back (tip: db.removed()).**
+
 ```  if(!animalExists){
     if (db.removed(id)) {
       return showError(410,'Gone', res)
