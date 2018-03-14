@@ -103,3 +103,25 @@ Verder standaard functie aangemaakt voor de afhandeling van errors:
   var result = {errors: [errorObj], data: null}
   res.status(id).render('error.ejs', Object.assign({}, result, helpers))
 } ```
+
+### **Respond with JSON if requested on GET /:id. Look at the implementation of the all function for inspiration on how to respond with either HTML or JSON based on the request. Test it out with Curl: curl localhost:1902 and localhost:1902/88996 should return JSON.**
+
+```  res.format({
+    json: () => res.json(result),
+    html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
+  })
+```
+
+Dit uit de comments gehaald, toegevoegd en in get gestopt.
+In get stond al iets dat de HTML uitvoerde, dit knip je dus en plak je in bovenstaande code.
+
+### **Implement DELETE /:id by removing an animal (tip: db.remove()). Respond with a 404 Not Found for unfound animals and a 400 Bad Request for invalid identifiers. Respond with a 204 No Content if successful. Note: you can just return JSON, as HTML forms don’t support DELETE. Test it out with Curl (curl --verbose --request DELETE localhost:1902/something) to see if 204 and 404 are returned. Note: restarting the server restores the removed animals.**
+
+```  if(!animalExists){
+    if (db.removed(id)) {
+      return showError(410,'Gone', res)
+    }
+    showError(404,'page not found', res)
+  } ```
+
+Je zegt letterlijk dat als de id wel ooit bestaan heeft, dat je dan een 410 terug gooit.

@@ -39,10 +39,17 @@ function get(req, res){
   var result = {errors: [], data: null} // db.get(id)
   var animalExists = db.get(id)
   if(!animalExists){
+    if (db.removed(id)) {
+      return showError(410,'Gone', res)
+    }
     showError(404,'page not found', res)
   }
   result.data = db.get(id)
-  res.render('detail.ejs', Object.assign({}, result, helpers))
+  res.format({
+    json: () => res.json(result),
+    html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
+  })
+
 
 }
 
