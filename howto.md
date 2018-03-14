@@ -62,6 +62,9 @@ Dan het 404 gedeelte, dit is de volledige code:
 Wat er nieuw is bijgekomen:
 ``` var animalExists = db.get(id) ```
 Is voor de volgende opgave ook handig.
+``` var result = {errors: [], data: null} // db.get(id)``` is aangepast
+hierbij laat je errors open zodat je deze later weer aan kan roepen. Data wordt ook op null gezet (wordt later db.get(id)op aangeroepen)
+
 Vervolgens,
 ``` if(!animalExists){
 }  ```
@@ -76,4 +79,27 @@ result.errors.push({id: 404, title:'page not found'}), dit pusht de errors van r
 res.status(404).render('error.ejs', Object.assign({}, result, helpers)): bij de status 404, render je de errors van het bestand error.ejs.
 return console.log(err): hiermee log je de errors naar je console
 
+
 ### **Handle invalid identifiers (such as curl localhost:1902/-) by sending a 400 Bad Request error back.**
+Hier ga je dus een errorafhandeling aanmaken wanneer er niet eens cijfers worden opgevraagd, maar bijv asdfghjkl.
+
+de 400 is in de laatste errorafhandeling gestopt:
+
+``` function notFound(err, req, res, next) {
+  if (err.category === "invalid"){
+    return showError(400, 'Bad Request', res)
+  }
+  console.log("Uncaught Error: ",err)
+} ```
+
+Kwam er hier achter dat je basically overal (res) achter moet zetten
+Verder standaard functie aangemaakt voor de afhandeling van errors:
+
+```function showError(id, title, res){
+  var errorObj = {
+    id: id,
+    title: title
+  }
+  var result = {errors: [errorObj], data: null}
+  res.status(id).render('error.ejs', Object.assign({}, result, helpers))
+} ```

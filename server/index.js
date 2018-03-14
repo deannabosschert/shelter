@@ -46,7 +46,6 @@ function get(req, res){
 
 }
 
-
 function showError(id, title, res){
   var errorObj = {
     id: id,
