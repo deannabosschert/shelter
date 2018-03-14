@@ -8,7 +8,7 @@ Om de server vervolgens te starten: ```npm run start```
 Als je weer verder dingen wil doen in je terminal:  ctrl C
 
 ### **Serving images does not work yet. Use express.static with app.use() to serve them.**
-```.use('/image', express.static('db/image'))```
+``` .use('/image', express.static('db/image')) ```
 .use zorgt er voor dat ie luistert naar /image. Wanneer er een request op /image komt, voert ie express.static etc uit (callback).
 In dit geval voert ie db/image uit maar dat zou bij wijze van ook een console.log kunnen zijn
 
@@ -21,15 +21,57 @@ In dit geval voert ie db/image uit maar dat zou bij wijze van ook een console.lo
 
   Hierna maak je de functie get aan.
 
-```function get(req, res){
+``` function get(req, res){
     var id = req.params.id
     var result = {errors: [], data: db.get(id)}
     res.render('detail.ejs', Object.assign({}, result, helpers))
-   }```
+   } ```
 
   Standaard ```(req, res)``` erbij, vervolgens maak je de variabele id aan (is makkelijker dan telkens ```req.params.id``` typen)
   Dan de variabele result aanmaken: manier om je templatepagina te renderen; laat de templatepagina zien met de ingevulde data
-  Hierna render je de bijbehorende detailpagina's, blabla object, roep je de variabele result aan, idk waar helpers voor staat
+  Hierna render je de bijbehorende detailpagina's met de data die dus uit db.get(id) komt, Object.assign voegt result en helpers samen, helpers is nodig om de templates te laden
 
 
-  ###**Handle unfound animals (such as curl localhost:1902/123) by sending a 404 Not Found error back (tip: db.has()). Create an error object and render it in the view/error.ejs template. Look at view/error.ejs for how errors should look.**
+  ### **Handle unfound animals (such as curl localhost:1902/123) by sending a 404 Not Found error back (tip: db.has()). Create an error object and render it in the view/error.ejs template. Look at view/error.ejs for how errors should look.**
+Allereerst deze toevoegen aan het einde:
+
+```  function notFound(err, req, res, next) {
+    console.log(err)
+  } ```
+
+Dit is de allerlaatste error-afhandeling; als bepaalde errors niet in de code ervoor al worden afgehandeld, wordt de functie notFound geladen.
+Wordt specifiek zo gedaan via:
+```   .use(notFound) ```
+
+Dan het 404 gedeelte, dit is de volledige code:
+
+``` function get(req, res){
+  var id = req.params.id
+  var result = {errors: [], data: null} // db.get(id)
+  var animalExists = db.get(id)
+  if(!animalExists){
+    result.errors.push({id: 404, title:'page not found'})
+    res.status(404).render('error.ejs', Object.assign({}, result, helpers))
+    return console.log(err)
+  }
+  result.data = db.get(id)
+  res.render('detail.ejs', Object.assign({}, result, helpers))
+
+} ```
+
+Wat er nieuw is bijgekomen:
+``` var animalExists = db.get(id) ```
+Is voor de volgende opgave ook handig.
+Vervolgens,
+``` if(!animalExists){
+}  ```
+
+Hierbij wordt gezegd; indien animalExists niet bestaat, dan wordt het volgende uitgevoerd:
+
+``` result.errors.push({id: 404, title:'page not found'})
+res.status(404).render('error.ejs', Object.assign({}, result, helpers))
+return console.log(err) ```
+
+result.errors.push({id: 404, title:'page not found'}), dit pusht de errors van result, geeft hieraan een 404 en laat de foutmelding zeggen 'page not found'.
+res.status(404).render('error.ejs', Object.assign({}, result, helpers)): bij de status 404, render je de errors van het bestand error.ejs.
+return console.log(err): hiermee log je de errors naar je console

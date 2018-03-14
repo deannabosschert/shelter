@@ -18,6 +18,7 @@ module.exports = express()
   // .put('/:id', set)
   // .patch('/:id', change)
   // .delete('/:id', remove)
+  .use(notFound)
   .listen(1902)
 
 function all(req, res) {
@@ -32,8 +33,21 @@ function all(req, res) {
   //   html: () => res.render('list.ejs', Object.assign({}, result, helpers))
   // })
 }
+
 function get(req, res){
   var id = req.params.id
-  var result = {errors: [], data: db.get(id)}
+  var result = {errors: [], data: null} // db.get(id)
+  var animalExists = db.get(id)
+  if(!animalExists){
+    result.errors.push({id: 404, title:'page not found'})
+    res.status(404).render('error.ejs', Object.assign({}, result, helpers))
+    return console.log(err)
+  }
+  result.data = db.get(id)
   res.render('detail.ejs', Object.assign({}, result, helpers))
+
+}
+
+function notFound(err, req, res, next) {
+  console.log(err)
 }
