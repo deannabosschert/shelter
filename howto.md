@@ -17,7 +17,7 @@ In dit geval voert ie db/image uit maar dat zou bij wijze van ook een console.lo
 ### **Implement GET /:id by rendering an animal with the view/detail.ejs template (tip: db.get()). Look at the implementation of GET / (the all function in the server) for inspiration.**
 ```.get('/:id', get)```          (de laatste get is de callback)
 
-  Hiermee zorg je er voor dat de functie get wordt aangeroepen wanneer je request naar iets met / (slash) gaat. Wat na de slash komt wordt opgeslagen in je req.params.id (iets wat al bestaat binnen http)(id is op basis van de :id hierboven. Had ook johan kunnen zijn maar dan was het req.params.johan.)(hierdoor weet je dus wat er na de / komt)
+  Hiermee zorg je er voor dat de functie get wordt aangeroepen wanneer je request naar iets met / (slash) gaat. Wat na de slash komt wordt opgeslagen in je req.params.id (iets wat al bestaat binnen http)(id is op basis van de :id hierboven. Had ook johan kunnen zijn maar dan was het req.params.johan.) (hierdoor weet je dus wat er na de / komt)
 
   Hierna maak je de functie get aan.
 
@@ -72,7 +72,8 @@ Is voor de volgende opgave ook handig.
 hierbij laat je errors open zodat je deze later weer aan kan roepen. Data wordt ook op null gezet (wordt later db.get(id)op aangeroepen)
 
 Vervolgens,
-``` if(!animalExists){
+```
+if(!animalExists){
 }
 ```
 
