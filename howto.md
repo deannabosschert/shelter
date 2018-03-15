@@ -21,11 +21,13 @@ In dit geval voert ie db/image uit maar dat zou bij wijze van ook een console.lo
 
   Hierna maak je de functie get aan.
 
-```function get(req, res){
+```
+function get(req, res){
     var id = req.params.id
     var result = {errors: [], data: db.get(id)}
     res.render('detail.ejs', Object.assign({}, result, helpers))
-   }```
+   }
+ ```
 
   Standaard ```(req, res)``` erbij, vervolgens maak je de variabele id aan (is makkelijker dan telkens ```req.params.id``` typen)
   Dan de variabele result aanmaken: manier om je templatepagina te renderen; laat de templatepagina zien met de ingevulde data
@@ -35,9 +37,11 @@ In dit geval voert ie db/image uit maar dat zou bij wijze van ook een console.lo
   ### **Handle unfound animals (such as curl localhost:1902/123) by sending a 404 Not Found error back (tip: db.has()). Create an error object and render it in the view/error.ejs template. Look at view/error.ejs for how errors should look.**
 Allereerst deze toevoegen aan het einde:
 
-```  function notFound(err, req, res, next) {
+```
+function notFound(err, req, res, next) {
     console.log(err)
-  } ```
+  }
+ ```
 
 Dit is de allerlaatste error-afhandeling; als bepaalde errors niet in de code ervoor al worden afgehandeld, wordt de functie notFound geladen.
 Wordt specifiek zo gedaan via:
@@ -45,7 +49,8 @@ Wordt specifiek zo gedaan via:
 
 Dan het 404 gedeelte, dit is de volledige code:
 
-``` function get(req, res){
+```
+function get(req, res){
   var id = req.params.id
   var result = {errors: [], data: null} // db.get(id)
   var animalExists = db.get(id)
@@ -57,7 +62,8 @@ Dan het 404 gedeelte, dit is de volledige code:
   result.data = db.get(id)
   res.render('detail.ejs', Object.assign({}, result, helpers))
 
-} ```
+}
+```
 
 Wat er nieuw is bijgekomen:
 ``` var animalExists = db.get(id) ```
@@ -67,13 +73,16 @@ hierbij laat je errors open zodat je deze later weer aan kan roepen. Data wordt 
 
 Vervolgens,
 ``` if(!animalExists){
-}  ```
+}
+```
 
 Hierbij wordt gezegd; indien animalExists niet bestaat, dan wordt het volgende uitgevoerd:
 
-``` result.errors.push({id: 404, title:'page not found'})
+```
+result.errors.push({id: 404, title:'page not found'})
 res.status(404).render('error.ejs', Object.assign({}, result, helpers))
-return console.log(err) ```
+return console.log(err)
+```
 
 result.errors.push({id: 404, title:'page not found'}), dit pusht de errors van result, geeft hieraan een 404 en laat de foutmelding zeggen 'page not found'.
 res.status(404).render('error.ejs', Object.assign({}, result, helpers)): bij de status 404, render je de errors van het bestand error.ejs.
@@ -85,28 +94,33 @@ Hier ga je dus een errorafhandeling aanmaken wanneer er niet eens cijfers worden
 
 de 400 is in de laatste errorafhandeling gestopt:
 
-``` function notFound(err, req, res, next) {
+```
+function notFound(err, req, res, next) {
   if (err.category === "invalid"){
     return showError(400, 'Bad Request', res)
   }
   console.log("Uncaught Error: ",err)
-} ```
+}
+```
 
 Kwam er hier achter dat je basically overal (res) achter moet zetten
 Verder standaard functie aangemaakt voor de afhandeling van errors:
 
-```function showError(id, title, res){
+```
+function showError(id, title, res){
   var errorObj = {
     id: id,
     title: title
   }
   var result = {errors: [errorObj], data: null}
   res.status(id).render('error.ejs', Object.assign({}, result, helpers))
-} ```
+}
+```
 
 ### **Respond with JSON if requested on GET /:id. Look at the implementation of the all function for inspiration on how to respond with either HTML or JSON based on the request. Test it out with Curl: curl localhost:1902 and localhost:1902/88996 should return JSON.**
 
-```  res.format({
+```
+res.format({
     json: () => res.json(result),
     html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
   })
@@ -124,11 +138,13 @@ dingen van de get functie hierin gecopied en get vervangen door delete (of kut m
 
 ### **Handle unfound animals that used to exist in GET /:id and DELETE /:id by sending a 410 Gone instead of 404 Not Found error back (tip: db.removed()).**
 
-```  if(!animalExists){
+```
+if(!animalExists){
     if (db.removed(id)) {
       return showError(410,'Gone', res)
     }
     showError(404,'page not found', res)
-  } ```
+  }
+  ```
 
 Je zegt letterlijk dat als de id wel ooit bestaan heeft, dat je dan een 410 terug gooit.
