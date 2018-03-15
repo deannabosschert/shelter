@@ -25,7 +25,7 @@ In dit geval voert ie db/image uit maar dat zou bij wijze van ook een console.lo
     var id = req.params.id
     var result = {errors: [], data: db.get(id)}
     res.render('detail.ejs', Object.assign({}, result, helpers))
-   } ```
+   }```
 
   Standaard ```(req, res)``` erbij, vervolgens maak je de variabele id aan (is makkelijker dan telkens ```req.params.id``` typen)
   Dan de variabele result aanmaken: manier om je templatepagina te renderen; laat de templatepagina zien met de ingevulde data
