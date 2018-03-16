@@ -63,26 +63,16 @@ function showError(id, title, res){
 
 function remove(req, res){
   var id = req.params.id
-  // data = data.filter(function (value) {
-  //   return value.id !== id
-  // })
-  // var result = {errors: [], data: null} // db.remove(id)
+
   var animalDelete = db.remove(id)
-  if(db.get(id)){
-    if (animalDelete) {
+  var animalExists = db.get(id)
+  if(!animalExists){
+    animalDelete
     res.status(204).json(db.get(id))
   }
-
-    }
-    // if (db.remove(id)) {
-    //   return showStatus(204,'No Content', res)
-    // }
-    // showError(404,'page not found', res)
+  // if(!animalExists){
+  //   showError(404,'page not found', res)
   // }
-
-  // res.format({
-  //   json: () => res.json(result),
-  // })
 }
 
 
