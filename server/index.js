@@ -69,7 +69,8 @@ function remove(req, res){
   // var result = {errors: [], data: null} // db.remove(id)
   var animalDelete = db.remove(id)
   if(db.get(id)){
-    animalDelete
+    animalDelete {
+    return showStatus(204,'No Content', res) }
     // res.status(204).json(animalDelete)
     }
     // if (db.remove(id)) {
@@ -77,7 +78,7 @@ function remove(req, res){
     // }
     // showError(404,'page not found', res)
   // }
-  result.data = animalDelete
+
   // res.format({
   //   json: () => res.json(result),
   // })
