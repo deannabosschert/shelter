@@ -61,20 +61,23 @@ function showError(id, title, res){
   res.status(id).render('error.ejs', Object.assign({}, result, helpers))
 }
 
-function remove(delete, req, res){
+function remove(req, res){
   var id = req.params.id
   data = data.filter(function (value) {
     return value.id !== id
   })
-  var result = {errors: [], data: null} // db.delete(id)
-  var animalDelete= db.delete(id)
+  var result = {errors: [], data: null} // db.remove(id)
+  var animalDelete = db.remove(id)
   if(!animalDelete){    //ik twijfel over die !
-    if (db.delete(id)) {
+    if (db.removed(id)) {
       return showError(204,'No Content', res)
     }
     showError(404,'page not found', res)
   }
-  result.data = db.delete(id)
+  result.data = animalDelete
+  res.format({
+    json: () => res.json(result),
+  })
   res.json({status: 'ok'})
 
 }
