@@ -66,20 +66,21 @@ function remove(req, res){
   // data = data.filter(function (value) {
   //   return value.id !== id
   // })
-  var result = {errors: [], data: null} // db.remove(id)
+  // var result = {errors: [], data: null} // db.remove(id)
   var animalDelete = db.remove(id)
-  if(animalDelete){
-    if (db.remove(id)) {
-      return showStatus(204,'No Content', res)
+  if(db.get(id)){
+    animalDelete
+    // res.status(204).json(animalDelete)
     }
-    showError(404,'page not found', res)
-  }
+    // if (db.remove(id)) {
+    //   return showStatus(204,'No Content', res)
+    // }
+    // showError(404,'page not found', res)
+  // }
   result.data = animalDelete
-  res.format({
-    json: () => res.json(result),
-  })
-  res.json({status: 'ok'})
-
+  // res.format({
+  //   json: () => res.json(result),
+  // })
 }
 
 
