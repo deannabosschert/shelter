@@ -59,10 +59,12 @@ function showError(id, title, res){
 
 function remove(req, res){
   var id = req.params.id
-  var animalDelete = db.remove(id)
+  // var animalDelete = db.remove(id)
   var animalExists = db.get(id)
-  if(!animalExists){
-    res.status(204).json(db.get(id))
+  if(animalExists){
+    db.remove(id)
+    res.status(204).json(animalExists)
+    console.log(animalExists)
   }
 }
 
