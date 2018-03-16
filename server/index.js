@@ -28,11 +28,7 @@ function all(req, res) {
   /* Use the following to support just HTML:  */
   res.render('list.ejs', Object.assign({}, result, helpers))
 
-  /* Support both a request for JSON and a request for HTML  */
-  // res.format({
-  //   json: () => res.json(result),
-  //   html: () => res.render('list.ejs', Object.assign({}, result, helpers))
-  // })
+
 }
 
 function get(req, res){
@@ -63,16 +59,11 @@ function showError(id, title, res){
 
 function remove(req, res){
   var id = req.params.id
-
   var animalDelete = db.remove(id)
   var animalExists = db.get(id)
   if(!animalExists){
-    animalDelete
     res.status(204).json(db.get(id))
   }
-  // if(!animalExists){
-  //   showError(404,'page not found', res)
-  // }
 }
 
 

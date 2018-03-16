@@ -132,10 +132,25 @@ In get stond al iets dat de HTML uitvoerde, dit knip je dus en plak je in bovens
 
 ### **Implement DELETE /:id by removing an animal (tip: db.remove()). Respond with a 404 Not Found for unfound animals and a 400 Bad Request for invalid identifiers. Respond with a 204 No Content if successful. Note: you can just return JSON, as HTML forms don’t support DELETE. Test it out with Curl (curl --verbose --request DELETE localhost:1902/something) to see if 204 and 404 are returned. Note: restarting the server restores the removed animals.**
 
-dingetje bovenaan bij express toegevoegd
-functie remove gemaakt, dingen van de voorbeeldserver in geflikkerd
+Bovenaan toegevoegd:  ```  .delete('/:id', remove) ```
 
-dingen van de get functie hierin gecopied en get vervangen door delete (of kut moet dat remove zijn? thuis ff naar kijken, busleef)
+Hierna de bijbehorende functie remove aangemaakt:
+```
+function remove(req, res){
+  var id = req.params.id
+  var animalDelete = db.remove(id)
+  var animalExists = db.get(id)
+  if(!animalExists){
+    res.status(204).json(db.get(id))
+  }
+}
+```
+Eerst maak je weer de variabele id aan (is makkelijker dan 'telkens' ```req.params.id``` typen)
+Vervolgens de variabele ``` var animalDelete = db.remove(id) ```, is duidelijker dan 'telkens' ```db.remove(id)```
+Vervolgens de variabele ``` var animalExists = db.get(id) ```, is duidelijker dan 'telkens' ```db.get(id)```
+
+``` if(!animalExists){}``` stelt letterlijk dat wanneer er geen id meer wordt gevonden (en deze in dit geval dus via de andere terminal-tab geremoved is), je de status 204 teruggooit, de bijbehorende json bestanden en welk ID je geremoved hebt.
+* Voorheen had ik binnen !animalExists nog animalDelete staan maar de code werkte wel gewoon nog nadat ik deze weghaalde, geen idee hoe dat zit? *
 
 ### **Handle unfound animals that used to exist in GET /:id and DELETE /:id by sending a 410 Gone instead of 404 Not Found error back (tip: db.removed()).**
 
