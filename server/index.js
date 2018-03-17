@@ -59,12 +59,15 @@ function showError(id, title, res){
 
 function remove(req, res){
   var id = req.params.id
-  // var animalDelete = db.remove(id)
   var animalExists = db.get(id)
-  if(animalExists){
+  // console.log(animalExists)
+  if(!animalExists){
     db.remove(id)
     res.status(204).json(animalExists)
     console.log(animalExists)
+  }
+  else {
+    showError(404,'page not found', res)
   }
 }
 
