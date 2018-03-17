@@ -138,19 +138,25 @@ Hierna de bijbehorende functie remove aangemaakt:
 ```
 function remove(req, res){
   var id = req.params.id
-  var animalDelete = db.remove(id)
   var animalExists = db.get(id)
-  if(!animalExists){
-    res.status(204).json(db.get(id))
+  // console.log(animalExists)
+  if(animalExists){
+    db.remove(id)
+    res.status(204).json(animalExists)
+    console.log(animalExists)
+  }
+  else {
+    showError(404,'page not found', res)
   }
 }
 ```
 Eerst maak je weer de variabele id aan (is makkelijker dan 'telkens' ```req.params.id``` typen)
-Vervolgens de variabele ``` var animalDelete = db.remove(id) ```, is duidelijker dan 'telkens' ```db.remove(id)```
 Vervolgens de variabele ``` var animalExists = db.get(id) ```, is duidelijker dan 'telkens' ```db.get(id)```
 
-``` if(!animalExists){}``` stelt letterlijk dat wanneer er geen id meer wordt gevonden (en deze in dit geval dus via de andere terminal-tab geremoved is), je de status 204 teruggooit, de bijbehorende json bestanden en welk ID je geremoved hebt.
-* Voorheen had ik binnen !animalExists nog animalDelete staan maar de code werkte wel gewoon nog nadat ik deze weghaalde, geen idee hoe dat zit? *
+``` if(!animalExists){}``` stelt letterlijk dat wanneer de functie remove uit wordt gevoerd en een dier gevonden is, db.remove(id) wordt toegepast. Hierna wordt de status 204 teruggegooid, evenals de ID behorende bij het geremovede dier.
+
+Wanneer de functie remove wordt uitgevoerd maar er geen dier aanwezig is, wordt er een 404 teruggegooid.
+
 
 ### **Handle unfound animals that used to exist in GET /:id and DELETE /:id by sending a 410 Gone instead of 404 Not Found error back (tip: db.removed()).**
 
@@ -164,3 +170,5 @@ if(!animalExists){
   ```
 
 Je zegt letterlijk dat als de id wel ooit bestaan heeft, dat je dan een 410 terug gooit.
+
+### **Create a form and make it post to /. You can add an HTML file in static, or you could make it a view, but then you need to create a route that renders it. Add a link from the list to the new form. See the definition of Animal for which fields are needed, what values they can have, and whether they are required. There is CSS for forms and fields already, but if you’d like to add more make sure to do so in src/index.css and to run npm run build afterwards.**
