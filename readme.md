@@ -71,8 +71,10 @@ volunteering at your local animal shelter, or donating!
 [MIT][] © [Deanna Bosschert][student]
 
 [mit]: license
+[mit]: license
 
 [author]: http://wooorm.com
+[student]: http://deanna.nl
 
 [assignment]: https://github.com/cmda-be/course-17-18/blob/master/week-4.md#shelter
 
