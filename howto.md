@@ -184,5 +184,38 @@ Je zegt letterlijk dat als de id wel ooit bestaan heeft, dat je dan een 410 teru
 
 ### **Create a form and make it post to /. You can add an HTML file in static, or you could make it a view, but then you need to create a route that renders it. Add a link from the list to the new form. See the definition of Animal for which fields are needed, what values they can have, and whether they are required. There is CSS for forms and fields already, but if you’d like to add more make sure to do so in src/index.css and to run npm run build afterwards.**
 
-Ik heb er voor gekozen om een view te maken (om het bij de rest van de server aan te laten sluiten, beetje in dezelfde line).
-Eerst heb ik een form.ejs bestand aangemaakt binnen de view map.
+Ik had geen idee waar te beginnen dus ik ben eerst maar tientallen bestanden van anderen gaan bekijken om een beetje op een idee te komen, zo kwam ik op die van *Marijnone* terecht.
+
+Ik heb eerst de data van de input gekopieerd van https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal en toen aangepast naar een algemene input, met de code van Marijn er naast zodat ik ongeveer goed zou zitten.
+```
+function add(req,res) {
+  var input =
+  { id: '18646',
+   name: req.body.name,
+   type: req.body.type,
+   place: req.body.place,
+   description: req.body.description,
+   sex: req.body.sex,
+   age: parseInt(req.body.age, 10),
+   size: req.body.size,
+   vaccinated: req.body.vaccinated == 1,
+   primaryColor: req.body.primaryColor,
+   secondaryColor: req.body.secondaryColor,
+   weight: parseInt(req.body.weight, 10),
+   intakeDate: req.body.intake
+  }
+// explanation in the howto.md, inspiration/code from https://github.com/Marijnone/shelter/blob/master/server/index.js
+
+  var animalAdd = db.add(input)
+  if(animalAdd){
+    res.redirect('/animalAdd/' + animalAdd.id)
+  }
+  else {
+   showError(422,'422 Unprocessable Entity', res)
+  }
+}
+```
+
+Hierna de variabele animalAdd aangemaakt waardoor het dier wordt toegevoegd aan de database, en verder wordt in de if(animalAdd){} ervoor gezorgd dat dit dier ook daadwerkelijk toegevoegd wordt aan '/'. Wanneer de functie wel wordt uitgevoerd maar dit allen niet gebeurt, wordt er een 422 error terug gegooid.
+
+ 
