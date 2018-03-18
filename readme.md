@@ -2,8 +2,9 @@
 
 # Shelter
 
-> A partially working Express server.
-> Can you fix and finish it?
+> Online Animal Shelter- Express Server
+
+*sidenote: the screenshot contains 'localhost:1903' but my server actually listens to 'localhost:1902'*
 
 ![](screenshot.png)
 
@@ -17,12 +18,19 @@ Fork this repository, `cd` into it, and:
 npm install
 npm run build # build and minify static files
 npm start # runs server on `localhost:1902`
+
+Don't forget:
+npm install body-parser
 ```
 
-## Todo
+## Description
+This was an assignment by Titus Wormer (Amsterdam University of Applied Sciences); this was once a partially working server and it was up to me/us to fix it. For a full understanding of the assignment:
+https://github.com/cmda-be/course-17-18/blob/master/week-4.md#shelter
 
-There’s a lot of things left to do.
-See the [assignment][] description for more info.
+## Solutions
+I also added a howto.md file where I documented my thoughts and explanations.
+Sadly, this document is in Dutch as it was easier for me and more understandable to my peers/teacher if I could just literally write down my process.
+
 
 ## Brief description of code
 
@@ -60,10 +68,18 @@ volunteering at your local animal shelter, or donating!
 
 [MIT][] © [Titus Wormer][author]
 
+[MIT][] © [Deanna Bosschert][student]
+
 [mit]: license
 
 [author]: http://wooorm.com
 
 [assignment]: https://github.com/cmda-be/course-17-18/blob/master/week-4.md#shelter
+
+## Sources
+https://github.com/Marijnone/shelter/blob/master/server/index.js
+https://github.com/cmda-be/shelter
+https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal
+http://expressjs.com/en/4x/api.html#express
 
 [nycacc]: http://nycacc.org
