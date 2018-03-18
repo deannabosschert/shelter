@@ -4,7 +4,7 @@
 
 > Online Animal Shelter- Express Server
 
-*sidenote: the screenshot contains 'localhost:1903' but my server actually listens to 'localhost:1902'*
+*sidenote: the screenshot states 'localhost:1903' but my server actually listens to 'localhost:1902'*
 
 ![](screenshot.png)
 
