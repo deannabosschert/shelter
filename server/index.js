@@ -1,3 +1,6 @@
+// Sources: https://github.com/Marijnone/shelter/blob/master/server/index.js
+
+
 'use strict'
 
 var express = require('express')
@@ -72,8 +75,8 @@ function remove(req, res){
 }
 
 // copied the input from https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal and edited it with help from https://github.com/Marijnone/shelter/blob/master/server/index.js
+// explanation in the howto.md, inspiration/code from https://github.com/Marijnone/shelter/blob/master/server/index.js
 function add(req,res) {
-
   var input =
   { id: '18646',
    name: req.body.name,
@@ -86,17 +89,17 @@ function add(req,res) {
    vaccinated: req.body.vaccinated == 1,
    primaryColor: req.body.primaryColor,
    secondaryColor: req.body.secondaryColor,
-   weight: parseInt(req.body.weight,10),
-   intakeDate: req.body.intake },
+   weight: parseInt(req.body.weight, 10),
+   intakeDate: req.body.intake
+  }
 
-// explanation in the howto.md, inspiration/code from https://github.com/Marijnone/shelter/blob/master/server/index.js
-   var animalAdd = db.add(input)
-   if(animalAdd){   
-     res.redirect('/animalAdd/' + animalAdd.id)
-     else {
-       showError(422,'422 Unprocessable Entity', res)
-     }
-   }
+  var animalAdd = db.add(input)
+  if(animalAdd){
+    res.redirect('/animalAdd/' + animalAdd.id)
+  }
+  else {
+   showError(422,'422 Unprocessable Entity', res)
+  }
 }
 
 function notFound(err, req, res, next) {
