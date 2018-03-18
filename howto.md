@@ -89,6 +89,17 @@ result.errors.push({id: 404, title:'page not found'}), dit pusht de errors van r
 res.status(404).render('error.ejs', Object.assign({}, result, helpers)): bij de status 404, render je de errors van het bestand error.ejs.
 return console.log(err): hiermee log je de errors naar je console
 
+## *EDIT*:
+```
+function notFound(err, req, res, next) {
+  console.log("Uncaught Error: ",err)
+  showError(404,'page not found', res)
+
+}
+```
+
+This does the trick too, en zo houd je het gewoon binnen de laatste afhandeling. Ook handiger voor de volgende opgave
+
 
 ### **Handle invalid identifiers (such as curl localhost:1902/-) by sending a 400 Bad Request error back.**
 Hier ga je dus een errorafhandeling aanmaken wanneer er niet eens cijfers worden opgevraagd, maar bijv asdfghjkl.
@@ -101,6 +112,8 @@ function notFound(err, req, res, next) {
     return showError(400, 'Bad Request', res)
   }
   console.log("Uncaught Error: ",err)
+  showError(404,'page not found', res)
+
 }
 ```
 
@@ -172,3 +185,6 @@ if(!animalExists){
 Je zegt letterlijk dat als de id wel ooit bestaan heeft, dat je dan een 410 terug gooit.
 
 ### **Create a form and make it post to /. You can add an HTML file in static, or you could make it a view, but then you need to create a route that renders it. Add a link from the list to the new form. See the definition of Animal for which fields are needed, what values they can have, and whether they are required. There is CSS for forms and fields already, but if you’d like to add more make sure to do so in src/index.css and to run npm run build afterwards.**
+
+Ik heb er voor gekozen om een view te maken (om het bij de rest van de server aan te laten sluiten, beetje in dezelfde line).
+Eerst heb ik een form.ejs bestand aangemaakt binnen de view map.
