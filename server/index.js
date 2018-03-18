@@ -1,11 +1,14 @@
 // Sources: https://github.com/Marijnone/shelter/blob/master/server/index.js
-
+// https://github.com/cmda-be/shelter
+// https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal
+// http://expressjs.com/en/4x/api.html#express
 
 'use strict'
 
 var express = require('express')
 var db = require('../db')
 var helpers = require('./helpers')
+var bodyParser = require('body-parser')
 
 module.exports = express()
   .set('view engine', 'ejs')
@@ -17,6 +20,7 @@ module.exports = express()
   .get('/:id', get)
   /* TODO: Other HTTP methods. */
   .post('/', add)
+  .get('/form', form)
   // .get('/:id', get)
   // .put('/:id', set)
   // .patch('/:id', change)
@@ -100,6 +104,10 @@ function add(req,res) {
   else {
    showError(422,'422 Unprocessable Entity', res)
   }
+}
+
+function form(req, res) {
+    res.render('form.ejs')
 }
 
 function notFound(err, req, res, next) {

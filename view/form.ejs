@@ -1,0 +1,74 @@
+<!--  Source: https://github.com/Marijnone/shelter/blob/master/view/form.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding a new animal to the shelter</title>
+</head>
+<body>
+    <h1>Add a new fluff</h1>
+    <form action=/ method=post>
+    <label for="name">Name</label>
+    <input name="name" type="text">
+<br>
+    <label for="type">Type</label> <br>
+
+    <input type="radio" name="type" value="cat"> Cat <br>
+    <input type="radio" name="type" value="dog"> Doggo <br>
+    <input type="radio" name="type" value="rabbit"> Rabbit <br>
+
+        <label for="place">Current location</label> <br>
+
+        <input type="radio"  name="place" value="Brooklyn Animal Care Center"> Brooklyn Animal Center <br>
+        <input type="radio"  name="place" value="Manhattan Animal Care Center"> Manhattan Animal Center <br>
+        <input type="radio"  name="place" value="Bronx Admissions Center"> Bronx Admissions Center <br>
+
+        <label for="description">Description</label>
+        <input type="text" name="description">
+
+        <label for="sex">Sex</label> <br>
+        <input type="radio" name="sex" value="male"> Male <br>
+        <input type="radio" name="sex" value="female"> Female <br>
+
+        <label for="age">Age</label>
+        <input type="number" name="age"> <br>
+
+        <label for="vaccinated">Vaccinated</label> <br>
+        <input type="radio" name="vaccinated" value="yes"> Yes <br>
+        <input type="radio" name="vaccinated" value="no"> No <br>
+
+        <label for="primaryColor">Primary Color</label>
+        <input type="text" name="primaryColor"> <br>
+
+        <label for="secondaryColor">Secondary Color</label>
+        <input  type="text" name="secondaryColor" required  > <br>
+
+        <label for="size">Size</label> <br>
+        <label>Small fluff</label>
+        <input type="radio" name="size" value="small">
+        <label>Medium fluff</label>
+        <input type="radio" name="size" value="medium">
+        <label>Large fluff</label>
+        <input type="radio" name="size" value="large">
+
+        <label for="length">Length</label> <br>
+        <label>Short fluff</label>
+        <input type="radio" name="length" value="short">
+        <label>Medium fluff</label>
+        <input type="radio" name="length" value="medium">
+        <label>Long fluff</label>
+        <input type="radio" name="length" value="long">
+
+        <label for="weight">Weight</label>
+        <input type="number" name="weight"><br>
+
+        <label for="intake">Intake Date</label>
+        <input  type="date" name="intake"><br>
+
+        <input type="submit" value="send">
+    </form>
+</body>
+<script src="index.js"></script>
+</html>

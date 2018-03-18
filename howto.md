@@ -184,7 +184,11 @@ Je zegt letterlijk dat als de id wel ooit bestaan heeft, dat je dan een 410 teru
 
 ### **Create a form and make it post to /. You can add an HTML file in static, or you could make it a view, but then you need to create a route that renders it. Add a link from the list to the new form. See the definition of Animal for which fields are needed, what values they can have, and whether they are required. There is CSS for forms and fields already, but if you’d like to add more make sure to do so in src/index.css and to run npm run build afterwards.**
 
-Ik had geen idee waar te beginnen dus ik ben eerst maar tientallen bestanden van anderen gaan bekijken om een beetje op een idee te komen, zo kwam ik op die van *Marijnone* terecht.
+## **Implement POST / to add an animal from the form (tip: db.add() and body-parser). You should clean the data sent to the server before passing it to db.add, as there are many cases where adding an animal can fail: such as when required fields are missing or if fields have a wrong data type (age and weight should be numbers, vaccinated and declawed a boolean, declawed must be undefined for dogs and rabbits, or when values are empty strings instead of undefined). Respond with a 422 Unprocessable Entity if the animal is invalid. Respond with a redirect to the animal if successful. Note: restarting the server removes the added animals.**
+
+Ik had geen idee waar te beginnen dus ik ben eerst maar tientallen bestanden van anderen gaan bekijken om een beetje op een idee te komen, zo kwam ik op die van *Marijnone* terecht. Ik geloof dat ik de laastste twee bulletpoint ook door elkaar heb gemaakt.
+
+Eerst body-parser geïnstalleerd mbv ```npm install body-parser```
 
 Ik heb eerst de data van de input gekopieerd van https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal en toen aangepast naar een algemene input, met de code van Marijn er naast zodat ik ongeveer goed zou zitten.
 ```
@@ -218,4 +222,28 @@ function add(req,res) {
 
 Hierna de variabele animalAdd aangemaakt waardoor het dier wordt toegevoegd aan de database, en verder wordt in de if(animalAdd){} ervoor gezorgd dat dit dier ook daadwerkelijk toegevoegd wordt aan '/'. Wanneer de functie wel wordt uitgevoerd maar dit allen niet gebeurt, wordt er een 422 error terug gegooid.
 
- 
+Verder heb ik er voor gekozen om een nieuw view bestand (form.ejs) aan te maken aangezien dit meer binnen dezelfde lijn als het nu connecten van bestanden staat, waardoor ik dacht dat dit makkelijker te begrijpen zou zijn.
+
+Ik heb deze als volgt gelinkt:
+
+```.get('/form', form) ``` als callback bovenaan de code toegevoegd.
+Hierna de functie form gemaakt:
+```
+function form(req, res) {
+    res.render('form.ejs')
+}
+```
+
+Hierna ben ik begonnen met het invullen van het form.ejs bestand:
+``` deze ga ik niet geheel copyen aangezien dat niet veel toe zal voegen aan deze howto ```
+
+Normaal formulier toegevoegd binnen HTML structuur; radio buttons daar waar maar één keuze kan worden gemaakt, nummer daar waar een getal moet worden ingevuld, description daar waar een beschrijving moet worden toegevoegd, date daar waar een datum moet worden ingevuld.
+Aan het einde van de code wordt de javascript pas geladen as always.
+
+
+##### SOURCES:
+ https://github.com/Marijnone/shelter/blob/master/server/index.js
+ https://github.com/cmda-be/shelter
+ https://github.com/Marijnone/shelter/blob/master/view/form.ejs
+ https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal
+ http://expressjs.com/en/4x/api.html#express
