@@ -14,7 +14,7 @@ module.exports = express()
   .get('/:id', get)
   /* TODO: Other HTTP methods. */
   // .post('/', add)
-  .get('/:id', get)
+  // .get('/:id', get)
   // .put('/:id', set)
   // .patch('/:id', change)
   // .delete('/:id', remove)
@@ -71,16 +71,13 @@ function remove(req, res){
   }
 }
 
-function get(req, res){=
-}
+
 
 function notFound(err, req, res, next) {
   if (err.category === "invalid"){
     return showError(400, 'Bad Request', res)
   }
   console.log("Uncaught Error: ",err)
+  showError(404,'page not found', res)
 
-  else{
-    showError(404,'page not found', res)
-  }
 }
