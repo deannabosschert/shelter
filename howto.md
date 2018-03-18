@@ -111,7 +111,6 @@ function notFound(err, req, res, next) {
   if (err.category === "invalid"){
     return showError(400, 'Bad Request', res)
   }
-  console.log("Uncaught Error: ",err)
   showError(404,'page not found', res)
 
 }
@@ -178,7 +177,6 @@ if(!animalExists){
     if (db.removed(id)) {
       return showError(410,'Gone', res)
     }
-    showError(404,'page not found', res)
   }
   ```
 
