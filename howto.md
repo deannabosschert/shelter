@@ -240,6 +240,8 @@ Hierna ben ik begonnen met het invullen van het form.ejs bestand:
 Normaal formulier toegevoegd binnen HTML structuur; radio buttons daar waar maar één keuze kan worden gemaakt, nummer daar waar een getal moet worden ingevuld, description daar waar een beschrijving moet worden toegevoegd, date daar waar een datum moet worden ingevuld.
 Aan het einde van de code wordt de javascript pas geladen as always.
 
+Als laatste heb ik nog geprobeerd om mijn server te vergelijken met dat van anderen (Jonah en Folkert), beide gecloned maar werkte voor geen meter aangezien zij wel al toegekomen zijn aan de Storage opdracht en er nog mee bezig zijn waarschijnlijk..
+
 
 ##### SOURCES:
  https://github.com/Marijnone/shelter/blob/master/server/index.js
