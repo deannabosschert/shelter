@@ -13,7 +13,7 @@ module.exports = express()
   .get('/', all)
   .get('/:id', get)
   /* TODO: Other HTTP methods. */
-  // .post('/', add)
+  .post('/', add)
   // .get('/:id', get)
   // .put('/:id', set)
   // .patch('/:id', change)
@@ -66,18 +66,43 @@ function remove(req, res){
     res.status(204).json(animalExists)
     console.log(animalExists)
   }
-  else {
-    showError(404,'page not found', res)
-  }
+  // else {
+  //   showError(404,'page not found', res)
+  // }
 }
 
+// copied the input from https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal and edited it with help from https://github.com/Marijnone/shelter/blob/master/server/index.js
+function add(req,res) {
 
+  var input =
+  { id: '18646',
+   name: req.body.name,
+   type: req.body.type,
+   place: req.body.place,
+   description: req.body.description,
+   sex: req.body.sex,
+   age: parseInt(req.body.age, 10),
+   size: req.body.size,
+   vaccinated: req.body.vaccinated == 1,
+   primaryColor: req.body.primaryColor,
+   secondaryColor: req.body.secondaryColor,
+   weight: parseInt(req.body.weight,10),
+   intakeDate: req.body.intake },
+
+// explanation in the howto.md, inspiration/code from https://github.com/Marijnone/shelter/blob/master/server/index.js
+   var animalAdd = db.add(input)
+   if(animalAdd){   
+     res.redirect('/animalAdd/' + animalAdd.id)
+     else {
+       showError(422,'422 Unprocessable Entity', res)
+     }
+   }
+}
 
 function notFound(err, req, res, next) {
   if (err.category === "invalid"){
     return showError(400, 'Bad Request', res)
   }
-  console.log("Uncaught Error: ",err)
   showError(404,'page not found', res)
 
 }
