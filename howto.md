@@ -1,21 +1,21 @@
 # Solutions to this assignment
 *special thanks to Folkert-Jan van der Pol*
 
-Eerst alles forken, clonen, dan ```npm install.```
-Vervolgens als je een aanpassing hebt gemaakt: ```npm run build```
-Om de server vervolgens te starten: ```npm run start```
+Eerst alles forken, clonen, dan `npm install.`
+Vervolgens als je een aanpassing hebt gemaakt: `npm run build`
+Om de server vervolgens te starten: `npm run start`
 
 Als je weer verder dingen wil doen in je terminal:  ctrl C
 
 ### **Serving images does not work yet. Use express.static with app.use() to serve them.**
-``` .use('/image', express.static('db/image')) ```
+`.use('/image', express.static('db/image')) `
 .use zorgt er voor dat ie luistert naar /image. Wanneer er een request op /image komt, voert ie express.static etc uit (callback).
 In dit geval voert ie db/image uit maar dat zou bij wijze van ook een console.log kunnen zijn
 
-^Dit gebeurt overigens binnen ```module.exports = express()```
+^Dit gebeurt overigens binnen `module.exports = express()`
 
 ### **Implement GET /:id by rendering an animal with the view/detail.ejs template (tip: db.get()). Look at the implementation of GET / (the all function in the server) for inspiration.**
-```.get('/:id', get)```          (de laatste get is de callback)
+`.get('/:id', get)`          (de laatste get is de callback)
 
   Hiermee zorg je er voor dat de functie get wordt aangeroepen wanneer je request naar iets met / (slash) gaat. Wat na de slash komt wordt opgeslagen in je req.params.id (iets wat al bestaat binnen http)(id is op basis van de :id hierboven. Had ook johan kunnen zijn maar dan was het req.params.johan.) (hierdoor weet je dus wat er na de / komt)
 
@@ -29,7 +29,7 @@ function get(req, res){
    }
  ```
 
-  Standaard ```(req, res)``` erbij, vervolgens maak je de variabele id aan (is makkelijker dan telkens ```req.params.id``` typen)
+  Standaard `(req, res)` erbij, vervolgens maak je de variabele id aan (is makkelijker dan telkens `req.params.id` typen)
   Dan de variabele result aanmaken: manier om je templatepagina te renderen; laat de templatepagina zien met de ingevulde data
   Hierna render je de bijbehorende detailpagina's met de data die dus uit db.get(id) komt, Object.assign voegt result en helpers samen, helpers is nodig om de templates te laden
 
@@ -66,9 +66,9 @@ function get(req, res){
 ```
 
 Wat er nieuw is bijgekomen:
-``` var animalExists = db.get(id) ```
+` var animalExists = db.get(id) `
 Is voor de volgende opgave ook handig.
-``` var result = {errors: [], data: null} // db.get(id)``` is aangepast
+` var result = {errors: [], data: null} // db.get(id)` is aangepast
 hierbij laat je errors open zodat je deze later weer aan kan roepen. Data wordt ook op null gezet (wordt later db.get(id)op aangeroepen)
 
 Vervolgens,
@@ -86,7 +86,7 @@ return console.log(err)
 ```
 
 result.errors.push({id: 404, title:'page not found'}), dit pusht de errors van result, geeft hieraan een 404 en laat de foutmelding zeggen 'page not found'.
-res.status(404).render('error.ejs', Object.assign({}, result, helpers)): bij de status 404, render je de errors van het bestand error.ejs.
+`res.status(404).render('error.ejs', Object.assign({}, result, helpers))`: bij de status 404, render je de errors van het bestand error.ejs.
 return console.log(err): hiermee log je de errors naar je console
 
 ## *EDIT*:
@@ -144,7 +144,7 @@ In get stond al iets dat de HTML uitvoerde, dit knip je dus en plak je in bovens
 
 ### **Implement DELETE /:id by removing an animal (tip: db.remove()). Respond with a 404 Not Found for unfound animals and a 400 Bad Request for invalid identifiers. Respond with a 204 No Content if successful. Note: you can just return JSON, as HTML forms don’t support DELETE. Test it out with Curl (curl --verbose --request DELETE localhost:1902/something) to see if 204 and 404 are returned. Note: restarting the server restores the removed animals.**
 
-Bovenaan toegevoegd:  ```  .delete('/:id', remove) ```
+Bovenaan toegevoegd:  `  .delete('/:id', remove) `
 
 Hierna de bijbehorende functie remove aangemaakt:
 ```
@@ -162,10 +162,10 @@ function remove(req, res){
   }
 }
 ```
-Eerst maak je weer de variabele id aan (is makkelijker dan 'telkens' ```req.params.id``` typen)
-Vervolgens de variabele ``` var animalExists = db.get(id) ```, is duidelijker dan 'telkens' ```db.get(id)```
+Eerst maak je weer de variabele id aan (is makkelijker dan 'telkens' `req.params.id` typen)
+Vervolgens de variabele `var animalExists = db.get(id) `, is duidelijker dan 'telkens' `db.get(id)`
 
-``` if(!animalExists){}``` stelt letterlijk dat wanneer de functie remove uit wordt gevoerd en een dier gevonden is, db.remove(id) wordt toegepast. Hierna wordt de status 204 teruggegooid, evenals de ID behorende bij het geremovede dier.
+`if(!animalExists){}` stelt letterlijk dat wanneer de functie remove uit wordt gevoerd en een dier gevonden is, db.remove(id) wordt toegepast. Hierna wordt de status 204 teruggegooid, evenals de ID behorende bij het geremovede dier.
 
 Wanneer de functie remove wordt uitgevoerd maar er geen dier aanwezig is, wordt er een 404 teruggegooid.
 
@@ -188,7 +188,7 @@ Je zegt letterlijk dat als de id wel ooit bestaan heeft, dat je dan een 410 teru
 
 Ik had geen idee waar te beginnen dus ik ben eerst maar tientallen bestanden van anderen gaan bekijken om een beetje op een idee te komen, zo kwam ik op die van *Marijnone* terecht. Ik geloof dat ik de laastste twee bulletpoint ook door elkaar heb gemaakt.
 
-Eerst body-parser geïnstalleerd mbv ```npm install body-parser```
+Eerst body-parser geïnstalleerd mbv `npm install body-parser`
 
 Ik heb eerst de data van de input gekopieerd van https://github.com/cmda-be/shelter/tree/master/db#dbaddanimal en toen aangepast naar een algemene input, met de code van Marijn er naast zodat ik ongeveer goed zou zitten.
 ```
@@ -226,7 +226,7 @@ Verder heb ik er voor gekozen om een nieuw view bestand (form.ejs) aan te maken 
 
 Ik heb deze als volgt gelinkt:
 
-```.get('/form', form) ``` als callback bovenaan de code toegevoegd.
+`.get('/form', form) ` als callback bovenaan de code toegevoegd.
 Hierna de functie form gemaakt:
 ```
 function form(req, res) {
@@ -235,7 +235,7 @@ function form(req, res) {
 ```
 
 Hierna ben ik begonnen met het invullen van het form.ejs bestand:
-``` deze ga ik niet geheel copyen aangezien dat niet veel toe zal voegen aan deze howto ```
+` deze ga ik niet geheel copyen aangezien dat niet veel toe zal voegen aan deze howto `
 
 Normaal formulier toegevoegd binnen HTML structuur; radio buttons daar waar maar één keuze kan worden gemaakt, nummer daar waar een getal moet worden ingevuld, description daar waar een beschrijving moet worden toegevoegd, date daar waar een datum moet worden ingevuld.
 Aan het einde van de code wordt de javascript pas geladen as always.
