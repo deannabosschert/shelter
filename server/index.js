@@ -15,12 +15,15 @@ module.exports = express()
   .set('views', 'view')
   .use(express.static('static'))
   .use('/image', express.static('db/image'))
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({extended: true}))
   // TODO: Serve the images in `db/image` on `/image`.
   .get('/', all)
+  .get('/form', form)
   .get('/:id', get)
   /* TODO: Other HTTP methods. */
   .post('/', add)
-  .get('/form', form)
+
   // .get('/:id', get)
   // .put('/:id', set)
   // .patch('/:id', change)
@@ -82,8 +85,7 @@ function remove(req, res){
 // explanation in the howto.md, inspiration/code from https://github.com/Marijnone/shelter/blob/master/server/index.js
 function add(req,res) {
   var input =
-  { id: '18646',
-   name: req.body.name,
+  {name: req.body.name,
    type: req.body.type,
    place: req.body.place,
    description: req.body.description,
@@ -94,12 +96,12 @@ function add(req,res) {
    primaryColor: req.body.primaryColor,
    secondaryColor: req.body.secondaryColor,
    weight: parseInt(req.body.weight, 10),
-   intakeDate: req.body.intake
+   intake: req.body.intake
   }
 
   var animalAdd = db.add(input)
   if(animalAdd){
-    res.redirect('/animalAdd/' + animalAdd.id)
+    res.redirect('/' + animalAdd.id)
   }
   else {
    showError(422,'422 Unprocessable Entity', res)
@@ -107,6 +109,7 @@ function add(req,res) {
 }
 
 function form(req, res) {
+  console.log("i tried")
     res.render('form.ejs')
 }
 
@@ -114,6 +117,7 @@ function notFound(err, req, res, next) {
   if (err.category === "invalid"){
     return showError(400, 'Bad Request', res)
   }
+  console.log(err)
   showError(404,'page not found', res)
 
 }
